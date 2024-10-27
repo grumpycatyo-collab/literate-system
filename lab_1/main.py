@@ -1,8 +1,8 @@
-# client/main.py
 from factory.donut_factory import DonutFactory
 from factory.ingredient_factory import IngredientFactory
 from domain.manufacturing_system import ManufacturingSystem
 from models.donut import Donut
+
 def main():
     # Using Singleton pattern
     manufacturing_system = ManufacturingSystem()
