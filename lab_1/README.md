@@ -1,67 +1,86 @@
-# Laboratory Work 0: SOLID Principles
+# Laboratory Work 1: Creational Design Patterns
 
 ## Student Information
-- **Name:** Maxim Plămădeală
+- **Name:** Plămădeală Maxim
 - **Group:** FAF-222
 
 ## Overview
-This laboratory work focuses on implementing two SOLID principles in a Python project. The chosen principles are:
-1. Single Responsibility Principle (SRP)
-2. Open/Closed Principle (OCP)
+This laboratory work focuses on implementing creational design patterns in a Python project. The implemented patterns are:
+1. Singleton Pattern
+2. Factory Method Pattern
+3. Prototype Pattern
+4. Abstract Factory Pattern
 
 ## Project Description
-The project implements a simple email system with notification capabilities. It demonstrates how SOLID principles can be applied to create a modular and extensible codebase.
+The project implements a donut manufacturing system that manages the creation of different types of donuts, their ingredients, and order processing. It demonstrates how various creational patterns can be used to create a flexible and maintainable manufacturing system.
 
-## SOLID Principles Implementation
+## Design Patterns Implementation
 
-### 1. Single Responsibility Principle (SRP)
+### 1. Singleton Pattern
 
-#### Implemented Classes:
-- `EmailContent`: Manages email content (subject and body)
-- `EmailSender`: Handles email sending logic
-- `EmailValidator`: Validates email addresses
+#### Implemented Class:
+- `ManufacturingSystem`: Ensures a single instance of the manufacturing system exists
 
-#### SRP Demonstration:
-Each class has a single, well-defined responsibility:
-- `EmailContent` only deals with storing email data
-- `EmailSender` is solely responsible for the email sending process
-- `EmailValidator` focuses exclusively on email validation
-
-### 2. Open/Closed Principle (OCP)
-
-#### Implemented Classes:
-- `NotificationSender`: Base class for notifications
-- `EmailNotification`: Handles email notifications
-- `SMSNotification`: Manages SMS notifications
-
-#### OCP Demonstration:
-- The `NotificationSender` base class is open for extension
-- New notification types can be added by inheriting from `NotificationSender`
-- Existing code doesn't need modification when adding new notification types
-
-## Code Snippets
-
-### EmailContent (SRP Example)
+#### Demonstration:
 ```python
-class EmailContent:
-    def __init__(self, subject, body):
-        self.subject = subject
-        self.body = body
+class ManufacturingSystem:
+    _instance = None
+
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super(ManufacturingSystem, cls).__new__(cls)
+            cls._instance.active_orders = []
+            cls._instance.completed_orders = []
+        return cls._instance
 ```
 
-### NotificationSender (OCP Example)
+### 2. Factory Method Pattern
+
+#### Implemented Classes:
+- `DonutFactory`: Creates different types of donuts
+- `IngredientFactory`: Creates different types of ingredients
+
+#### Demonstration:
 ```python
-class NotificationSender:
-    def send_notification(self, message):
-        pass
+class DonutFactory:
+    def create_chocolate_donut(self) -> Donut:
+        donut = self.create_basic_donut()
+        donut.filling = "chocolate"
+        donut.toppings = ["chocolate sprinkles"]
+        donut.add_ingredient(IngredientFactory.create_ingredient("chocolate"))
+        return donut
+```
 
-class EmailNotification(NotificationSender):
-    def send_notification(self, message):
-        print(f"Sending email notification: {message}")
+### 3. Prototype Pattern
 
-class SMSNotification(NotificationSender):
-    def send_notification(self, message):
-        print(f"Sending SMS notification: {message}")
+#### Implemented in:
+- `Donut` class with clone functionality
+
+#### Demonstration:
+```python
+class Donut:
+    def clone(self):
+        return deepcopy(self)
+```
+
+### 4. Abstract Factory Pattern
+
+#### Implemented Classes:
+- `IngredientFactory`: Creates families of related ingredients
+- Various ingredient classes (Flour, Sugar, Chocolate, Vanilla)
+
+#### Demonstration:
+```python
+class IngredientFactory:
+    @staticmethod
+    def create_ingredient(ingredient_type: str):
+        ingredients = {
+            "flour": Flour(),
+            "sugar": Sugar(),
+            "chocolate": Chocolate(),
+            "vanilla": Vanilla()
+        }
+        return ingredients.get(ingredient_type.lower())
 ```
 
 ## Project Structure
@@ -69,17 +88,38 @@ class SMSNotification(NotificationSender):
 lab_1/
 ├── main.py
 ├── models/
-│   └── email.py
-└── operations/
-    ├── email.py
-    └── notification.py
+│   ├── donut.py
+│   └── ingredients.py
+├── factory/
+│   ├── donut_factory.py
+│   └── ingredient_factory.py
+└── domain/
+    └── manufacturing_system.py
 ```
 
 ## How to Run
-1. Navigate to the `lab_1` directory
-2. Execute: `python main.py`
+1. Navigate to the project directory
+2. Execute: `python3 main.py`
+
+## Output Example
+```
+Singleton check: True
+
+Active orders:
+Donut(size=medium, filling=chocolate, toppings=['chocolate sprinkles'], ingredients=[Flour, Sugar, Chocolate])
+Donut(size=medium, filling=vanilla, toppings=['sugar powder'], ingredients=[Flour, Sugar, Vanilla])
+Donut(size=medium, filling=chocolate, toppings=['chocolate sprinkles', 'gold leaf'], ingredients=[Flour, Sugar, Chocolate, Chocolate])
+Donut(size=large, filling=None, toppings=['custom topping'], ingredients=[Flour, Sugar, Chocolate])
+
+Completed orders:
+[List of completed orders...]
+```
 
 ## Conclusions
-This laboratory work successfully demonstrates the application of SRP and OCP in a practical scenario. The resulting code is more organized, extensible, and adheres to good software design principles. The implementation showcases how SOLID principles can improve code quality even in relatively simple applications.
+This laboratory work successfully demonstrates the implementation and practical application of various creational design patterns. Each pattern serves a specific purpose:
+- **Singleton** ensures system-wide consistency in order management
+- **Factory Method** provides flexible donut creation
+- **Prototype** enables efficient donut customization
+- **Abstract Factory** manages ingredient creation systematically
 
-
+The combination of these patterns results in a flexible, maintainable, and extensible donut manufacturing system. The implementation showcases how creational patterns can be used together to create a robust object creation framework.
