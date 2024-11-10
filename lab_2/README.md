@@ -96,6 +96,14 @@ lab_2/
 ---
 ## Usage Example
 NOTE: Usage example is different from the actual `main.py`. Same for **Output Example**
+
+To run the project do:
+```python
+python3 lab_2/main.py
+```
+
+Here how the `main.py` should look like:
+
 ```python
 def main():
     # Using Facade
@@ -121,7 +129,7 @@ def main():
 ```
 ---
 ## Output Example
-```python
+```bash
 === Donut Manufacturing System ===
 
 1. USING ORDERING FACADE
@@ -147,14 +155,9 @@ Converted format: {'items': ['chocolate donut'], 'customer_id': 'CUST123', 'stat
 ### Conclusions
 The implementation of structural design patterns has significantly improved the donut manufacturing system:
 
-The Decorator Pattern provides a flexible way to add new features and modify costs without changing the core donut classes.
-The Facade Pattern simplifies the system's usage by providing a clean, high-level interface for common operations.
-The Adapter Pattern enables seamless integration with external systems by converting between different data formats.
+- The **Decorator Pattern** provides a flexible way to add new features and modify costs without changing the core donut classes.
+- The **Facade Pattern** simplifies the system's usage by providing a clean, high-level interface for common operations.
+- The **Adapter Pattern** enables seamless integration with external systems by converting between different data formats.
 
-These patterns work together to create a more flexible and maintainable system while keeping the code organized and easy to understand. The structural patterns have helped in:
-
-Adding new functionality without modifying existing code
-Simplifying complex operations for clients
-Making the system more adaptable to external integrations
-
+These patterns work together to create a more flexible and maintainable system while keeping the code organized and easy to understand.
 The implementation demonstrates how structural patterns can be effectively used to enhance system architecture while maintaining clean and maintainable code.
