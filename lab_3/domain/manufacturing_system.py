@@ -11,6 +11,12 @@ class ManufacturingSystem:
     def add_order(self, order):
         self.active_orders.append(order)
 
+    def remove_order(self, order):
+        if order in self.active_orders:
+            self.active_orders.remove(order)
+        elif order in self.completed_orders:
+            self.completed_orders.remove(order)
+
     def complete_order(self, order):
         if order in self.active_orders:
             self.active_orders.remove(order)
